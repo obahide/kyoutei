@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>競艇買い目AI判定ツール（ST・風量・グレード対応版）v2.0</title>
+    <title>競艇買い目AI判定ツール（ST・風量・グレード対応版）v2.1</title>
     <style>
         * {
             margin: 0;
@@ -2155,6 +2155,14 @@
                     '<div class="input-group">' +
                         '<label>モーター点 <span style="font-size:10px;color:#28a745;">✓自動</span></label>' +
                         '<input type="number" id="motor' + i + '" min="1" max="5" value="3" readonly style="background: #f0f8ff;">' +
+                    '</div>' +
+                    '<div style="background: #ffe5e5; padding: 10px; border-radius: 5px; margin-top: 10px;">' +
+                        '<label style="font-weight: bold; color: #d32f2f; font-size: 11px;">⚠️ フライング</label>' +
+                        '<select id="flying' + i + '" style="width: 100%; padding: 8px; margin-top: 5px; border: 2px solid #d32f2f; border-radius: 5px; font-weight: bold;">' +
+                            '<option value="none">なし</option>' +
+                            '<option value="F1">F1 (-2点)</option>' +
+                            '<option value="F2">F2 (-3点)</option>' +
+                        '</select>' +
                     '</div>';
                 racerInputsDiv.appendChild(card);
                 
@@ -2658,7 +2666,17 @@
                 var corner = parseFloat(document.getElementById('corner' + i).value) || 0;
                 var condition = parseFloat(document.getElementById('condition' + i).value) || 0;
                 var motor = parseFloat(document.getElementById('motor' + i).value) || 0;
-                racerScores[i] = stScore + corner + condition + motor;
+                
+                // フライング補正を計算
+                var flyingPenalty = 0;
+                var flyingSelect = document.getElementById('flying' + i);
+                if (flyingSelect && flyingSelect.value === 'F1') {
+                    flyingPenalty = -2;
+                } else if (flyingSelect && flyingSelect.value === 'F2') {
+                    flyingPenalty = -3;
+                }
+                
+                racerScores[i] = stScore + corner + condition + motor + flyingPenalty;
             }
             
             // コース補正を適用
@@ -2702,6 +2720,15 @@
                 var baseScore = racerScores[i].toFixed(1);
                 var multiplier = COURSE_MULTIPLIERS[i].toFixed(2);
                 
+                // フライング情報を取得
+                var flyingSelect = document.getElementById('flying' + i);
+                var flyingText = '';
+                if (flyingSelect && flyingSelect.value === 'F1') {
+                    flyingText = ' <span style="color: #d32f2f; font-weight: bold;">⚠️F1(-2)</span>';
+                } else if (flyingSelect && flyingSelect.value === 'F2') {
+                    flyingText = ' <span style="color: #d32f2f; font-weight: bold;">⚠️F2(-3)</span>';
+                }
+                
                 // 1号艇の場合、壁理論補正を表示
                 var correctionText = '';
                 if (i === 1 && wallCorrection !== 1.0) {
@@ -2710,7 +2737,7 @@
                 
                 html += 
                     '<tr>' +
-                        '<td><strong>' + i + '号艇</strong></td>' +
+                        '<td><strong>' + i + '号艇</strong>' + flyingText + '</td>' +
                         '<td>' + stScore + '点 (ST:' + st.toFixed(2) + ')</td>' +
                         '<td>' + baseScore + '点</td>' +
                         '<td>×' + multiplier + correctionText + '</td>' +
@@ -2786,7 +2813,17 @@
                 var corner = parseFloat(document.getElementById('corner' + i).value) || 0;
                 var condition = parseFloat(document.getElementById('condition' + i).value) || 0;
                 var motor = parseFloat(document.getElementById('motor' + i).value) || 0;
-                racerScores[i] = stScore + corner + condition + motor;
+                
+                // フライング補正を計算
+                var flyingPenalty = 0;
+                var flyingSelect = document.getElementById('flying' + i);
+                if (flyingSelect && flyingSelect.value === 'F1') {
+                    flyingPenalty = -2;
+                } else if (flyingSelect && flyingSelect.value === 'F2') {
+                    flyingPenalty = -3;
+                }
+                
+                racerScores[i] = stScore + corner + condition + motor + flyingPenalty;
             }
             
             var adjustedScores = {};
@@ -2967,15 +3004,24 @@
                 var baseScore = racerScores[i].toFixed(1);
                 var multiplier = COURSE_MULTIPLIERS[i].toFixed(2);
                 
+                // フライング情報を取得
+                var flyingSelect = document.getElementById('flying' + i);
+                var flyingText = '';
+                if (flyingSelect && flyingSelect.value === 'F1') {
+                    flyingText = ' <span style="color: #d32f2f; font-weight: bold;">⚠️F1(-2)</span>';
+                } else if (flyingSelect && flyingSelect.value === 'F2') {
+                    flyingText = ' <span style="color: #d32f2f; font-weight: bold;">⚠️F2(-3)</span>';
+                }
+                
                 // 1号艇の場合、壁理論補正を表示
                 var correctionText = '';
-                if (i === 1 && wallCorrection !== 1.0) {
+                if (i === 1 && typeof wallCorrection !== 'undefined' && wallCorrection !== 1.0) {
                     correctionText = ' <span style="color: ' + (wallCorrection > 1 ? '#28a745' : '#dc3545') + '; font-weight: bold;">×' + wallCorrection.toFixed(2) + ' (壁理論)</span>';
                 }
                 
                 html += 
                     '<tr>' +
-                        '<td><strong>' + i + '号艇</strong></td>' +
+                        '<td><strong>' + i + '号艇</strong>' + flyingText + '</td>' +
                         '<td>' + stScore + '点 (ST:' + st.toFixed(2) + ')</td>' +
                         '<td>' + baseScore + '点</td>' +
                         '<td>×' + multiplier + correctionText + '</td>' +
@@ -3125,11 +3171,13 @@
                 var cornerInput = document.getElementById('corner' + i);
                 var conditionInput = document.getElementById('condition' + i);
                 var motorInput = document.getElementById('motor' + i);
+                var flyingInput = document.getElementById('flying' + i);
                 
                 if (stInput) stInput.addEventListener('input', displayProbabilityTable);
                 if (cornerInput) cornerInput.addEventListener('change', displayProbabilityTable);
                 if (conditionInput) conditionInput.addEventListener('change', displayProbabilityTable);
                 if (motorInput) motorInput.addEventListener('change', displayProbabilityTable);
+                if (flyingInput) flyingInput.addEventListener('change', displayProbabilityTable);
             }
             
             // 女子戦チェックボックスのイベントリスナー
