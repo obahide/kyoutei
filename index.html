@@ -2,8 +2,11 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>競艇買い目AI判定ツール（ST・風量・グレード対応版）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>競艇買い目AI判定ツール（ST・風量・グレード対応版）v2.0</title>
     <style>
         * {
             margin: 0;
@@ -15,7 +18,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
         
         .container {
@@ -24,21 +27,217 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 30px;
+            padding: 20px;
         }
         
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 10px;
-            font-size: 28px;
+            font-size: 24px;
         }
         
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 20px;
+                line-height: 1.3;
+            }
+            
+            .subtitle {
+                font-size: 11px;
+            }
+            
+            .section {
+                margin-bottom: 15px;
+                padding: 12px;
+            }
+            
+            .section-title {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            
+            .wind-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .racer-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .input-group label {
+                font-size: 11px;
+            }
+            
+            .input-group input, .input-group select {
+                padding: 10px;
+                font-size: 16px;
+            }
+            
+            .betting-input {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                padding: 15px 20px;
+                font-size: 16px;
+                width: 100%;
+            }
+            
+            .add-bet-btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 16px;
+            }
+            
+            .probability-table {
+                font-size: 12px;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .probability-table th,
+            .probability-table td {
+                padding: 8px 6px;
+            }
+            
+            .suji-modal-content {
+                margin: 2% auto;
+                padding: 15px;
+                width: 95%;
+                max-height: 90vh;
+            }
+            
+            .suji-modal-header {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+            
+            .suji-option {
+                padding: 12px;
+                margin: 8px 0;
+            }
+            
+            .suji-option-title {
+                font-size: 14px;
+            }
+            
+            .suji-option-desc {
+                font-size: 12px;
+            }
+            
+            .suji-option-combos {
+                font-size: 11px;
+            }
+            
+            .modal-close {
+                font-size: 24px;
+            }
+            
+            /* 理論ボタンのスマホ対応 */
+            .section > div[style*="display: flex"] {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .section > div[style*="display: flex"] > div:first-child {
+                margin-bottom: 10px;
+            }
+            
+            #startCopyToggle,
+            #wallToggle {
+                width: 100%;
+                padding: 15px 20px !important;
+            }
+            
+            label[for="ladiesRaceCheck"] {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 15px !important;
+            }
+            
+            /* 選手カードのスマホ対応 */
+            .racer-card {
+                padding: 12px;
+            }
+            
+            .racer-header {
+                font-size: 14px;
+            }
+            
+            /* ベットカードのスマホ対応 */
+            .bet-card {
+                padding: 12px;
+            }
+            
+            .bet-card h4 {
+                font-size: 14px;
+            }
+            
+            .odds-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            /* セレクトボックスのスマホ対応 */
+            select {
+                font-size: 16px;
+                padding: 12px;
+            }
+            
+            /* 結果表示のスマホ対応 */
+            .result {
+                padding: 15px;
+            }
+            
+            .ev-comparison {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* タッチデバイス向けのホバーエフェクト無効化 */
+            button:hover {
+                transform: none;
+            }
+            
+            .suji-option:hover {
+                transform: none;
+            }
+            
+            /* タッチ操作の改善 */
+            button:active {
+                transform: scale(0.98);
+            }
+            
+            .suji-option:active {
+                background: #e0e0e0;
+            }
         }
         
         .section {
@@ -421,12 +620,101 @@
         .ev-box.teracen .value {
             color: #dc3545;
         }
+        
+        /* スジ舟券モーダル */
+        .suji-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .suji-modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .suji-modal-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .suji-option {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .suji-option:hover {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .suji-option-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .suji-option-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .suji-option-combos {
+            font-size: 12px;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .modal-close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            color: #000;
+        }
+        
+        #startCopyToggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        #wallToggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🚤 競艇買い目AI判定ツール</h1>
-        <p class="subtitle">期待値ベース + ST・風量・グレード補正 + 選手検索機能</p>
+        <p class="subtitle">期待値ベース + ST・風量・グレード補正 + 選手検索 + 展開予想</p>
         
         <!-- 競艇場選択 -->
         <div class="section">
@@ -553,8 +841,97 @@
                 </button>
             </div>
             
+            <div style="margin-top: 15px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <h3 style="color: white; margin: 0 0 5px 0; font-size: 18px;">⚡ スタートコピー理論</h3>
+                        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 13px;">2号艇・5号艇を基準に周辺艇のSTを自動調整</p>
+                    </div>
+                    <button id="startCopyToggle" onclick="toggleStartCopyTheory()" style="
+                        padding: 12px 30px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        background: #dc3545;
+                        color: white;
+                        box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+                        transition: all 0.3s;
+                    ">
+                        ❌ OFF
+                    </button>
+                </div>
+                <div id="startCopyInfo" style="display: none; margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.95); border-radius: 8px;">
+                    <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 14px;">📋 理論の内容</h4>
+                    <div style="font-size: 12px; color: #333; line-height: 1.8;">
+                        <strong>【2号艇基準】</strong><br>
+                        ・0.17秒以下：1号艇=2号艇、3号艇=2号艇+0.01秒<br>
+                        ・0.17~0.20秒：1号艇=2号艇、3号艇=そのまま<br>
+                        ・0.20秒以上：1号艇=2号艇、3号艇=2号艇-0.01秒<br>
+                        <strong>【5号艇基準】</strong><br>
+                        ・0.17秒以下：4号艇=5号艇、6号艇=5号艇+0.01秒<br>
+                        ・0.17~0.20秒：4号艇=5号艇、6号艇=そのまま<br>
+                        ・0.20秒以上：4号艇=5号艇、6号艇=5号艇-0.01秒
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 15px; padding: 20px; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); border-radius: 10px; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div style="flex: 1;">
+                        <h3 style="color: white; margin: 0 0 5px 0; font-size: 18px;">🧱 3コースの壁理論</h3>
+                        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 13px;">スタート比較で1号艇のイン逃げ率を補正</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <label style="display: flex; align-items: center; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="ladiesRaceCheck" style="margin-right: 8px; cursor: pointer;">
+                            <span style="color: white; font-size: 14px; font-weight: bold;">女子戦</span>
+                        </label>
+                        <button id="wallToggle" onclick="toggleWallTheory()" style="
+                            padding: 12px 30px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            border: none;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            background: #dc3545;
+                            color: white;
+                            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+                            transition: all 0.3s;
+                        ">
+                            ❌ OFF
+                        </button>
+                    </div>
+                </div>
+                <div id="wallInfo" style="display: none; margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.95); border-radius: 8px;">
+                    <h4 style="color: #FF6B6B; margin: 0 0 10px 0; font-size: 14px;">📋 理論の内容</h4>
+                    <div style="font-size: 12px; color: #333; line-height: 1.8;">
+                        <strong>✅ 3号艇ST &lt; 2号艇ST</strong> → 1号艇トップ率 <strong style="color: #28a745;">上昇</strong>（3コースが壁になる）<br>
+                        <strong>⚠️ 2号艇ST &lt; 1号艇ST かつ 2号艇ST &lt; 3号艇ST</strong> → 1号艇トップ率 <strong style="color: #dc3545;">下降</strong>（2号艇が先行）<br>
+                        <strong>⚪ 上記以外</strong> → 補正なし<br>
+                        <em style="color: #666;">※女子戦にチェックを入れると補正が無効になります</em>
+                    </div>
+                </div>
+            </div>
+            
             <div class="betting-input" id="bettingInputs"></div>
-            <button class="add-bet-btn" id="addBetBtn">+ 買い目を追加</button>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="add-bet-btn" id="addBetBtn">+ 買い目を追加</button>
+                <button class="add-bet-btn" id="addSujiBtn" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);">🎯 展開予想を設定</button>
+            </div>
+        </div>
+        
+        <!-- リアルタイム確率表示エリア -->
+        <div id="probabilityDisplay" class="section" style="display: none;">
+            <div class="section-title">📊 出目確率（リアルタイム表示）</div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #fff9e6; border-radius: 8px; border: 2px solid #FFC107;">
+                <p style="margin: 0; font-size: 14px; color: #856404;">
+                    💡 <strong>選手情報を入力すると自動的に全120通りの確率が表示されます</strong><br>
+                    ※買い目やオッズを入力しなくても、選手の能力値だけで確率計算ができます
+                </p>
+            </div>
+            <div id="probabilityContent"></div>
         </div>
         
         <!-- ボタン -->
@@ -565,6 +942,119 @@
         
         <!-- 結果表示 -->
         <div class="result" id="result"></div>
+        
+        <!-- スジ舟券選択モーダル -->
+        <div id="sujiModal" class="suji-modal">
+            <div class="suji-modal-content">
+                <span class="modal-close" onclick="closeSujiModal()">&times;</span>
+                <div class="suji-modal-header">🎯 展開予想を設定</div>
+                <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 20px;">
+                    💡 スクロールして全てのパターンを確認できます
+                </p>
+                
+                <div style="background: #e3f2fd; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                    <h3 style="color: #1976D2; margin: 0; font-size: 16px;">🏁 ① 1コースが逃げるとき（1号艇1着）</h3>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('1course_even')">
+                    <div class="suji-option-title">⚡ スタートが揃う</div>
+                    <div class="suji-option-desc">2着が2,3号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 1-2-全, 1-3-全（8点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('1course_2late')">
+                    <div class="suji-option-title">🔴 2コースが遅れる</div>
+                    <div class="suji-option-desc">2着が3,4号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 1-3-全, 1-4-全（8点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('1course_3late')">
+                    <div class="suji-option-title">🟡 3コースが遅れる</div>
+                    <div class="suji-option-desc">2着が2,4,5号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 1-2-全, 1-4-全, 1-5-全（12点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('1course_23late')">
+                    <div class="suji-option-title">🟠 2,3コースがともに遅れる</div>
+                    <div class="suji-option-desc">2着が4号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 1-4-全（4点）</div>
+                </div>
+                
+                <div style="background: #fff9e6; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h3 style="color: #F57C00; margin: 0; font-size: 16px;">🚀 ② 2号艇がトップ（2号艇1着）</h3>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('2course_makuri')">
+                    <div class="suji-option-title">💥 2号艇がまくる</div>
+                    <div class="suji-option-desc">2着が3,4号艇、3着が3,4,5,6号艇</div>
+                    <div class="suji-option-combos">買い目: 2-3-4,5,6 と 2-4-3,5,6（6点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('2course_sashi')">
+                    <div class="suji-option-title">⚡ 2号艇が差す</div>
+                    <div class="suji-option-desc">2着が1,3号艇、3着が1,3,4,5号艇</div>
+                    <div class="suji-option-combos">買い目: 2-1-3,4,5 と 2-3-1,4,5（6点）</div>
+                </div>
+                
+                <div style="background: #e8f5e9; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h3 style="color: #388E3C; margin: 0; font-size: 16px;">🌊 ③ 3号艇がトップ（3号艇1着）</h3>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('3course_makuri')">
+                    <div class="suji-option-title">💥 3コースがまくる</div>
+                    <div class="suji-option-desc">2着が4,5号艇、3着が1,4,5,6号艇</div>
+                    <div class="suji-option-combos">買い目: 3-4-1,5,6 と 3-5-1,4,6（6点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('3course_makurisashi')">
+                    <div class="suji-option-title">⚡ 3コースがまくり差し</div>
+                    <div class="suji-option-desc">2着が1,4号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 3-1-全, 3-4-全（8点）</div>
+                </div>
+                
+                <div style="background: #fce4ec; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h3 style="color: #C2185B; margin: 0; font-size: 16px;">🔥 ④ 4号艇がトップ（4号艇1着）</h3>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('4course_makuri')">
+                    <div class="suji-option-title">💥 4コースがまくる</div>
+                    <div class="suji-option-desc">2着が5,6号艇、3着が1,5,6号艇</div>
+                    <div class="suji-option-combos">買い目: 4-5-1,6 と 4-6-1,5（4点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('4course_makurisashi')">
+                    <div class="suji-option-title">⚡ 4コースがまくり差し</div>
+                    <div class="suji-option-desc">2着が1,5号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 4-1-全, 4-5-全（8点）</div>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('4course_sashi')">
+                    <div class="suji-option-title">🔵 4コースが差す（レアケース）</div>
+                    <div class="suji-option-desc">2着が1号艇、3着全通り（2,3号艇が遅れる場合）</div>
+                    <div class="suji-option-combos">買い目: 4-1-全（4点）</div>
+                </div>
+                
+                <div style="background: #fff3e0; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h3 style="color: #E65100; margin: 0; font-size: 16px;">⚡ ⑤ 5号艇がトップ（5号艇1着）</h3>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('5course_makurisashi')">
+                    <div class="suji-option-title">💥 5コースがまくり差し</div>
+                    <div class="suji-option-desc">2着が1,6号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 5-1-全, 5-6-全（8点）</div>
+                </div>
+                
+                <div style="background: #f3e5f5; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <h3 style="color: #7B1FA2; margin: 0; font-size: 16px;">💫 ⑥ 6号艇がトップ（6号艇1着）</h3>
+                </div>
+                
+                <div class="suji-option" onclick="addSujiPattern('6course_makurisashi')">
+                    <div class="suji-option-title">💥 6コースがまくり差し</div>
+                    <div class="suji-option-desc">2着が1,5号艇、3着全通り</div>
+                    <div class="suji-option-combos">買い目: 6-1-全, 6-5-全（8点）</div>
+                </div>
+            </div>
+        </div>
 
         <!-- 注意書き・使い方ガイド -->
         <div style="margin-top: 40px; padding: 30px; background: #fff3cd; border-left: 5px solid #ffc107; border-radius: 8px;">
@@ -867,6 +1357,8 @@
         };
         
         var useTeracenOdds = true;
+        var useStartCopyTheory = false; // スタートコピー理論のフラグ
+        var useWallTheory = false; // 3コースの壁理論のフラグ
         
         var RACER_DATABASE = {
           // ========================================
@@ -1556,6 +2048,7 @@
                 COURSE_MULTIPLIERS = baseMultipliers;
                 windEffect.innerHTML = '風の影響: なし（風速3m/s未満）';
                 windEffect.style.background = '#e7f3ff';
+                displayProbabilityTable();
                 return;
             }
             
@@ -1597,6 +2090,9 @@
             
             resultDiv.classList.remove('show');
             resultDiv.innerHTML = '';
+            
+            // 確率表をリアルタイム更新
+            displayProbabilityTable();
         }
         
         function onVenueChange() {
@@ -1666,6 +2162,212 @@
             }
             
             addBetCard();
+        }
+        
+        // スジ舟券モーダルを開く
+        function openSujiModal() {
+            document.getElementById('sujiModal').style.display = 'block';
+        }
+        
+        // スジ舟券モーダルを閉じる
+        function closeSujiModal() {
+            document.getElementById('sujiModal').style.display = 'none';
+        }
+        
+        // スジ舟券パターンを追加
+        function addSujiPattern(pattern) {
+            var combos = [];
+            
+            switch(pattern) {
+                // ========== ① 1コースが逃げるとき ==========
+                case '1course_even':
+                    // スタートが揃う: 2着が2,3号艇、3着全通り
+                    combos = [
+                        '1-2-3', '1-2-4', '1-2-5', '1-2-6',
+                        '1-3-2', '1-3-4', '1-3-5', '1-3-6'
+                    ];
+                    break;
+                    
+                case '1course_2late':
+                    // 2コースが遅れる: 2着が3,4号艇、3着全通り
+                    combos = [
+                        '1-3-2', '1-3-4', '1-3-5', '1-3-6',
+                        '1-4-2', '1-4-3', '1-4-5', '1-4-6'
+                    ];
+                    break;
+                    
+                case '1course_3late':
+                    // 3コースが遅れる: 2着が2,4,5号艇、3着全通り
+                    combos = [
+                        '1-2-3', '1-2-4', '1-2-5', '1-2-6',
+                        '1-4-2', '1-4-3', '1-4-5', '1-4-6',
+                        '1-5-2', '1-5-3', '1-5-4', '1-5-6'
+                    ];
+                    break;
+                    
+                case '1course_23late':
+                    // 2,3コースがともに遅れる: 2着が4号艇、3着全通り
+                    combos = ['1-4-2', '1-4-3', '1-4-5', '1-4-6'];
+                    break;
+                
+                // ========== ② 2号艇がトップ ==========
+                case '2course_makuri':
+                    // 2号艇がまくる: 2着が3,4号艇、3着が3,4,5,6号艇
+                    combos = [
+                        '2-3-4', '2-3-5', '2-3-6',
+                        '2-4-3', '2-4-5', '2-4-6'
+                    ];
+                    break;
+                    
+                case '2course_sashi':
+                    // 2号艇が差す: 2着が1,3号艇、3着が1,3,4,5号艇
+                    combos = [
+                        '2-1-3', '2-1-4', '2-1-5',
+                        '2-3-1', '2-3-4', '2-3-5'
+                    ];
+                    break;
+                
+                // ========== ③ 3号艇がトップ ==========
+                case '3course_makuri':
+                    // 3コースがまくる: 2着が4,5号艇、3着が1,4,5,6号艇
+                    combos = [
+                        '3-4-1', '3-4-5', '3-4-6',
+                        '3-5-1', '3-5-4', '3-5-6'
+                    ];
+                    break;
+                    
+                case '3course_makurisashi':
+                    // 3コースがまくり差し: 2着が1,4号艇、3着全通り
+                    combos = [
+                        '3-1-2', '3-1-4', '3-1-5', '3-1-6',
+                        '3-4-1', '3-4-2', '3-4-5', '3-4-6'
+                    ];
+                    break;
+                
+                // ========== ④ 4号艇がトップ ==========
+                case '4course_makuri':
+                    // 4コースがまくる: 2着が5,6号艇、3着が1,5,6号艇
+                    combos = [
+                        '4-5-1', '4-5-6',
+                        '4-6-1', '4-6-5'
+                    ];
+                    break;
+                    
+                case '4course_makurisashi':
+                    // 4コースがまくり差し: 2着が1,5号艇、3着全通り
+                    combos = [
+                        '4-1-2', '4-1-3', '4-1-5', '4-1-6',
+                        '4-5-1', '4-5-2', '4-5-3', '4-5-6'
+                    ];
+                    break;
+                    
+                case '4course_sashi':
+                    // 4コースが差す: 2着が1号艇、3着全通り（レアケース）
+                    combos = ['4-1-2', '4-1-3', '4-1-5', '4-1-6'];
+                    break;
+                
+                // ========== ⑤ 5号艇がトップ ==========
+                case '5course_makurisashi':
+                    // 5コースがまくり差し: 2着が1,6号艇、3着全通り
+                    combos = [
+                        '5-1-2', '5-1-3', '5-1-4', '5-1-6',
+                        '5-6-1', '5-6-2', '5-6-3', '5-6-4'
+                    ];
+                    break;
+                
+                // ========== ⑥ 6号艇がトップ ==========
+                case '6course_makurisashi':
+                    // 6コースがまくり差し: 2着が1,5号艇、3着全通り
+                    combos = [
+                        '6-1-2', '6-1-3', '6-1-4', '6-1-5',
+                        '6-5-1', '6-5-2', '6-5-3', '6-5-4'
+                    ];
+                    break;
+                
+                // ========== 旧パターン（参考） ==========
+                case 'basic':
+                    // 基本スジ: 1-2-全
+                    combos = ['1-2-3', '1-2-4', '1-2-5', '1-2-6'];
+                    break;
+                    
+                case '3rd':
+                    // 3番手スジ: 1-3-全
+                    combos = ['1-3-2', '1-3-4', '1-3-5', '1-3-6'];
+                    break;
+                    
+                case '2hekomi':
+                    // 2号艇ヘコミ想定
+                    combos = [
+                        '1-3-2', '1-3-4', '1-3-5', '1-3-6',
+                        '1-4-2', '1-4-3', '1-4-5', '1-4-6'
+                    ];
+                    break;
+                    
+                case 'full':
+                    // フルスジ: 1-2-全, 1-3-全, 1-4-全
+                    combos = [
+                        '1-2-3', '1-2-4', '1-2-5', '1-2-6',
+                        '1-3-2', '1-3-4', '1-3-5', '1-3-6',
+                        '1-4-2', '1-4-3', '1-4-5', '1-4-6'
+                    ];
+                    break;
+                    
+                case 'iron':
+                    // 鉄板スジ
+                    combos = ['1-2-3', '1-2-4', '1-3-2', '1-3-4'];
+                    break;
+            }
+            
+            // 各買い目を追加
+            combos.forEach(function(combo) {
+                // 現在のbetCountを保存
+                var currentBetId = betCount;
+                
+                // 買い目カードを追加
+                addBetCard();
+                
+                // 少し待ってから値を設定（DOMの更新を待つ）
+                setTimeout(function() {
+                    var comboInput = document.getElementById('combo' + currentBetId);
+                    if (comboInput) {
+                        comboInput.value = combo;
+                        // テラセンオッズを更新
+                        updateTeracenOdds(currentBetId);
+                    }
+                }, 10);
+            });
+            
+            closeSujiModal();
+            
+            // パターン名を取得
+            var patternName = '';
+            switch(pattern) {
+                case '1course_even': patternName = '1コース逃げ（スタート揃う）'; break;
+                case '1course_2late': patternName = '1コース逃げ（2コース遅れ）'; break;
+                case '1course_3late': patternName = '1コース逃げ（3コース遅れ）'; break;
+                case '1course_23late': patternName = '1コース逃げ（2,3コース遅れ）'; break;
+                case '2course_makuri': patternName = '2号艇まくり'; break;
+                case '2course_sashi': patternName = '2号艇差し'; break;
+                case '3course_makuri': patternName = '3号艇まくり'; break;
+                case '3course_makurisashi': patternName = '3号艇まくり差し'; break;
+                case '4course_makuri': patternName = '4号艇まくり'; break;
+                case '4course_makurisashi': patternName = '4号艇まくり差し'; break;
+                case '4course_sashi': patternName = '4号艇差し'; break;
+                case '5course_makurisashi': patternName = '5号艇まくり差し'; break;
+                case '6course_makurisashi': patternName = '6号艇まくり差し'; break;
+                default: patternName = '展開予想'; break;
+            }
+            
+            // 確認メッセージ
+            alert('✅ ' + patternName + ' ' + combos.length + '点を追加しました！\n\n買い目: ' + combos.join(', ') + '\n\n※オッズを入力して判定計算してください');
+        }
+        
+        // モーダルの外側をクリックしたら閉じる
+        window.onclick = function(event) {
+            var modal = document.getElementById('sujiModal');
+            if (event.target == modal) {
+                closeSujiModal();
+            }
         }
         
         function addBetCard() {
@@ -1784,7 +2486,299 @@
             return allCombos;
         }
         
+        // 3コースの壁理論のトグル
+        function toggleWallTheory() {
+            useWallTheory = !useWallTheory;
+            var btn = document.getElementById('wallToggle');
+            var info = document.getElementById('wallInfo');
+            
+            if (useWallTheory) {
+                btn.innerHTML = '✅ ON';
+                btn.style.background = '#28a745';
+                info.style.display = 'block';
+            } else {
+                btn.innerHTML = '❌ OFF';
+                btn.style.background = '#dc3545';
+                info.style.display = 'none';
+            }
+            
+            // 確率表示を更新
+            displayProbabilityTable();
+        }
+        
+        // 3コースの壁理論を適用して1号艇のコース補正を調整
+        function apply3CourseWallTheory() {
+            if (!useWallTheory) {
+                return 1.0; // 補正なし
+            }
+            
+            // 女子戦チェック
+            var ladiesCheck = document.getElementById('ladiesRaceCheck');
+            var isLadiesRace = ladiesCheck ? ladiesCheck.checked : false;
+            if (isLadiesRace) {
+                return 1.0; // 女子戦は補正なし
+            }
+            
+            var st1Input = document.getElementById('st1');
+            var st2Input = document.getElementById('st2');
+            var st3Input = document.getElementById('st3');
+            
+            if (!st1Input || !st2Input || !st3Input) {
+                return 1.0; // 要素が見つからない場合は補正なし
+            }
+            
+            var st1 = parseFloat(st1Input.value) || 0.17;
+            var st2 = parseFloat(st2Input.value) || 0.17;
+            var st3 = parseFloat(st3Input.value) || 0.17;
+            
+            // 3号艇のSTが2号艇より早い場合 → 1号艇トップ率上昇
+            if (st3 < st2) {
+                return 1.15; // +15%補正
+            }
+            
+            // 2号艇のSTが1号艇と3号艇より早い場合 → 1号艇トップ率下降
+            if (st2 < st1 && st2 < st3) {
+                return 0.85; // -15%補正
+            }
+            
+            return 1.0; // その他は補正なし
+        }
+        
+        // スタートコピー理論のトグル
+        function toggleStartCopyTheory() {
+            useStartCopyTheory = !useStartCopyTheory;
+            var btn = document.getElementById('startCopyToggle');
+            var info = document.getElementById('startCopyInfo');
+            
+            if (useStartCopyTheory) {
+                btn.innerHTML = '✅ ON';
+                btn.style.background = '#28a745';
+                info.style.display = 'block';
+            } else {
+                btn.innerHTML = '❌ OFF';
+                btn.style.background = '#dc3545';
+                info.style.display = 'none';
+            }
+            
+            // 確率表示を更新
+            displayProbabilityTable();
+        }
+        
+        // スタートコピー理論を適用してSTを調整
+        function applyStartCopyTheory() {
+            // 全てのSTフィールドの背景色をリセット
+            for (var i = 1; i <= 6; i++) {
+                var input = document.getElementById('st' + i);
+                if (input && i !== 2 && i !== 5) {
+                    input.style.background = '';
+                }
+            }
+            
+            if (!useStartCopyTheory) return;
+            
+            var st2 = parseFloat(document.getElementById('st2').value) || 0.17;
+            var st5 = parseFloat(document.getElementById('st5').value) || 0.17;
+            
+            // 2号艇を基準に1号艇と3号艇を調整
+            var st1Input = document.getElementById('st1');
+            var st3Input = document.getElementById('st3');
+            
+            if (st2 <= 0.17) {
+                // ①2号艇が0.17秒以下
+                st1Input.value = st2.toFixed(2);
+                st1Input.style.background = '#d4edda';
+                st3Input.value = (st2 + 0.01).toFixed(2);
+                st3Input.style.background = '#d4edda';
+            } else if (st2 > 0.17 && st2 <= 0.20) {
+                // ②2号艇が0.17~0.20秒
+                st1Input.value = st2.toFixed(2);
+                st1Input.style.background = '#d4edda';
+                // 3号艇はそのまま
+            } else {
+                // ③2号艇が0.20秒以上
+                st1Input.value = st2.toFixed(2);
+                st1Input.style.background = '#d4edda';
+                st3Input.value = (st2 - 0.01).toFixed(2);
+                st3Input.style.background = '#d4edda';
+            }
+            
+            // 5号艇を基準に4号艇と6号艇を調整
+            var st4Input = document.getElementById('st4');
+            var st6Input = document.getElementById('st6');
+            
+            if (st5 <= 0.17) {
+                // ④5号艇が0.17秒以下
+                st4Input.value = st5.toFixed(2);
+                st4Input.style.background = '#d4edda';
+                st6Input.value = (st5 + 0.01).toFixed(2);
+                st6Input.style.background = '#d4edda';
+            } else if (st5 > 0.17 && st5 <= 0.20) {
+                // ⑤5号艇が0.17~0.20秒
+                st4Input.value = st5.toFixed(2);
+                st4Input.style.background = '#d4edda';
+                // 6号艇はそのまま
+            } else {
+                // ⑥5号艇が0.20秒以上
+                st4Input.value = st5.toFixed(2);
+                st4Input.style.background = '#d4edda';
+                st6Input.value = (st5 - 0.01).toFixed(2);
+                st6Input.style.background = '#d4edda';
+            }
+        }
+        
+        // リアルタイムで確率を表示する関数
+        function displayProbabilityTable() {
+            // スタートコピー理論を適用
+            applyStartCopyTheory();
+            
+            // 全ての選手情報が入力されているかチェック
+            var allFilled = true;
+            for (var i = 1; i <= 6; i++) {
+                var st = document.getElementById('st' + i).value;
+                var corner = document.getElementById('corner' + i).value;
+                var condition = document.getElementById('condition' + i).value;
+                var motor = document.getElementById('motor' + i).value;
+                if (!st || !corner || !condition || !motor) {
+                    allFilled = false;
+                    break;
+                }
+            }
+            
+            // 入力が不完全な場合は非表示
+            if (!allFilled) {
+                document.getElementById('probabilityDisplay').style.display = 'none';
+                return;
+            }
+            
+            // 各号艇のスコアを計算
+            var racerScores = {};
+            for (var i = 1; i <= 6; i++) {
+                var st = parseFloat(document.getElementById('st' + i).value) || 0.17;
+                var stScore = calculateSTScore(st);
+                var corner = parseFloat(document.getElementById('corner' + i).value) || 0;
+                var condition = parseFloat(document.getElementById('condition' + i).value) || 0;
+                var motor = parseFloat(document.getElementById('motor' + i).value) || 0;
+                racerScores[i] = stScore + corner + condition + motor;
+            }
+            
+            // コース補正を適用
+            var adjustedScores = {};
+            for (var i = 1; i <= 6; i++) {
+                adjustedScores[i] = racerScores[i] * COURSE_MULTIPLIERS[i];
+            }
+            
+            // 3コースの壁理論を適用（1号艇の補正）
+            var wallCorrection = apply3CourseWallTheory();
+            adjustedScores[1] = adjustedScores[1] * wallCorrection;
+            
+            var totalAdjusted = 0;
+            for (var i = 1; i <= 6; i++) {
+                totalAdjusted += adjustedScores[i];
+            }
+            
+            // 全120通りの確率を計算
+            var allCombos = generateAllCombinations(adjustedScores, totalAdjusted);
+            
+            // HTML生成
+            var html = '';
+            
+            // 1着確率テーブル
+            html += 
+                '<h3 style="margin: 20px 0 10px 0;">📊 1着確率</h3>' +
+                '<table class="probability-table">' +
+                    '<tr>' +
+                        '<th>号艇</th>' +
+                        '<th>ST点</th>' +
+                        '<th>基礎点</th>' +
+                        '<th>コース補正</th>' +
+                        '<th>補正点</th>' +
+                        '<th>1着確率</th>' +
+                    '</tr>';
+            
+            for (var i = 1; i <= 6; i++) {
+                var prob = (adjustedScores[i] / totalAdjusted * 100).toFixed(1);
+                var st = parseFloat(document.getElementById('st' + i).value) || 0.17;
+                var stScore = calculateSTScore(st);
+                var baseScore = racerScores[i].toFixed(1);
+                var multiplier = COURSE_MULTIPLIERS[i].toFixed(2);
+                
+                // 1号艇の場合、壁理論補正を表示
+                var correctionText = '';
+                if (i === 1 && wallCorrection !== 1.0) {
+                    correctionText = ' <span style="color: ' + (wallCorrection > 1 ? '#28a745' : '#dc3545') + '; font-weight: bold;">×' + wallCorrection.toFixed(2) + ' (壁理論)</span>';
+                }
+                
+                html += 
+                    '<tr>' +
+                        '<td><strong>' + i + '号艇</strong></td>' +
+                        '<td>' + stScore + '点 (ST:' + st.toFixed(2) + ')</td>' +
+                        '<td>' + baseScore + '点</td>' +
+                        '<td>×' + multiplier + correctionText + '</td>' +
+                        '<td>' + adjustedScores[i].toFixed(1) + '点</td>' +
+                        '<td><strong>' + prob + '%</strong></td>' +
+                    '</tr>';
+            }
+            html += '</table>';
+            
+            // 全120通りの確率表
+            html += 
+                '<h3 style="margin: 30px 0 10px 0;">📈 全3連単の出現確率（全120通り）</h3>' +
+                '<div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0; font-size: 13px;">' +
+                    '<div style="padding: 5px 15px; background: white; border: 2px solid #ddd; border-radius: 5px;">⚪ 〜50%: 通常</div>' +
+                    '<div style="padding: 5px 15px; background: #e3f2fd; border: 2px solid #2196F3; border-radius: 5px;">🔵 50〜70%: 上位半分</div>' +
+                    '<div style="padding: 5px 15px; background: #fff9e6; border: 2px solid #FFC107; border-radius: 5px;">🟡 70〜80%: 有力範囲</div>' +
+                    '<div style="padding: 5px 15px; background: #ffebee; border: 2px solid #F44336; border-radius: 5px;">🔴 80%〜: 手堅い範囲</div>' +
+                '</div>' +
+                '<div style="max-height: 600px; overflow-y: auto; border: 2px solid #667eea; border-radius: 10px; margin: 20px 0;">' +
+                '<table class="probability-table">' +
+                    '<tr>' +
+                        '<th>順位</th>' +
+                        '<th>買い目</th>' +
+                        '<th>出現確率</th>' +
+                        '<th>累積確率</th>' +
+                    '</tr>';
+            
+            var cumulativeProb = 0;
+            for (var i = 0; i < allCombos.length; i++) {
+                cumulativeProb += allCombos[i].probability;
+                var cumulativePct = cumulativeProb * 100;
+                
+                // 累積確率に応じて背景色を決定
+                var rowColor = '';
+                if (cumulativePct >= 80) {
+                    rowColor = 'background: #ffebee;';  // 赤色
+                } else if (cumulativePct >= 70) {
+                    rowColor = 'background: #fff9e6;';  // 黄色
+                } else if (cumulativePct >= 50) {
+                    rowColor = 'background: #e3f2fd;';  // 青色
+                }
+                
+                html += 
+                    '<tr style="' + rowColor + '">' +
+                        '<td><strong>' + (i + 1) + '位</strong></td>' +
+                        '<td><strong>' + allCombos[i].combo + '</strong></td>' +
+                        '<td>' + (allCombos[i].probability * 100).toFixed(3) + '%</td>' +
+                        '<td><strong>' + cumulativePct.toFixed(2) + '%</strong></td>' +
+                    '</tr>';
+            }
+            
+            html += '</table>' +
+                '</div>';
+            html += '<p style="text-align: center; margin-top: 10px; color: #666; font-size: 14px;">※全120通りの累積確率: ' + (cumulativeProb * 100).toFixed(2) + '%</p>';
+            
+            // 表示
+            document.getElementById('probabilityContent').innerHTML = html;
+            document.getElementById('probabilityDisplay').style.display = 'block';
+        }
+        
         function calculate() {
+            // スタートコピー理論を適用
+            applyStartCopyTheory();
+            
+            // 3コースの壁理論の補正値を先に計算
+            var wallCorrection = apply3CourseWallTheory();
+            console.log('Wall Correction:', wallCorrection);
+            
             var racerScores = {};
             for (var i = 1; i <= 6; i++) {
                 var st = parseFloat(document.getElementById('st' + i).value) || 0.17;
@@ -1799,6 +2793,12 @@
             var totalAdjusted = 0;
             for (var i = 1; i <= 6; i++) {
                 adjustedScores[i] = racerScores[i] * COURSE_MULTIPLIERS[i];
+            }
+            
+            // 3コースの壁理論を適用（1号艇の補正）
+            adjustedScores[1] = adjustedScores[1] * wallCorrection;
+            
+            for (var i = 1; i <= 6; i++) {
                 totalAdjusted += adjustedScores[i];
             }
             
@@ -1856,10 +2856,10 @@
                 });
             }
             
-            displayResults(results, totalRealEV, totalTeracenEV, totalInvestment, adjustedScores, totalAdjusted, racerScores);
+            displayResults(results, totalRealEV, totalTeracenEV, totalInvestment, adjustedScores, totalAdjusted, racerScores, wallCorrection);
         }
         
-        function displayResults(results, totalRealEV, totalTeracenEV, totalInvestment, adjustedScores, totalAdjusted, racerScores) {
+        function displayResults(results, totalRealEV, totalTeracenEV, totalInvestment, adjustedScores, totalAdjusted, racerScores, wallCorrection) {
             var shouldBuy = useTeracenOdds ? (totalRealEV > totalTeracenEV) : (totalRealEV > totalInvestment);
             var roi = ((totalRealEV - totalInvestment) / totalInvestment * 100);
             var selectedVenue = venueSelect ? venueSelect.value : '標準';
@@ -1966,12 +2966,19 @@
                 var stScore = calculateSTScore(st);
                 var baseScore = racerScores[i].toFixed(1);
                 var multiplier = COURSE_MULTIPLIERS[i].toFixed(2);
+                
+                // 1号艇の場合、壁理論補正を表示
+                var correctionText = '';
+                if (i === 1 && wallCorrection !== 1.0) {
+                    correctionText = ' <span style="color: ' + (wallCorrection > 1 ? '#28a745' : '#dc3545') + '; font-weight: bold;">×' + wallCorrection.toFixed(2) + ' (壁理論)</span>';
+                }
+                
                 html += 
                     '<tr>' +
                         '<td><strong>' + i + '号艇</strong></td>' +
                         '<td>' + stScore + '点 (ST:' + st.toFixed(2) + ')</td>' +
                         '<td>' + baseScore + '点</td>' +
-                        '<td>×' + multiplier + '</td>' +
+                        '<td>×' + multiplier + correctionText + '</td>' +
                         '<td>' + adjustedScores[i].toFixed(1) + '点</td>' +
                         '<td><strong>' + prob + '%</strong></td>' +
                     '</tr>';
@@ -2088,6 +3095,12 @@
         }
         
         addBetBtn.addEventListener('click', addBetCard);
+        
+        var addSujiBtn = document.getElementById('addSujiBtn');
+        if (addSujiBtn) {
+            addSujiBtn.addEventListener('click', openSujiModal);
+        }
+        
         calcBtn.addEventListener('click', calculate);
         resetBtn.addEventListener('click', resetForm);
         
@@ -2105,6 +3118,25 @@
             if (gradeSelect) gradeSelect.addEventListener('change', onGradeChange);
             if (windSpeed) windSpeed.addEventListener('input', onWindChange);
             if (windDirection) windDirection.addEventListener('change', onWindChange);
+            
+            // 選手情報の入力フィールドにリアルタイム確率表示のイベントリスナーを追加
+            for (var i = 1; i <= 6; i++) {
+                var stInput = document.getElementById('st' + i);
+                var cornerInput = document.getElementById('corner' + i);
+                var conditionInput = document.getElementById('condition' + i);
+                var motorInput = document.getElementById('motor' + i);
+                
+                if (stInput) stInput.addEventListener('input', displayProbabilityTable);
+                if (cornerInput) cornerInput.addEventListener('change', displayProbabilityTable);
+                if (conditionInput) conditionInput.addEventListener('change', displayProbabilityTable);
+                if (motorInput) motorInput.addEventListener('change', displayProbabilityTable);
+            }
+            
+            // 女子戦チェックボックスのイベントリスナー
+            var ladiesRaceCheck = document.getElementById('ladiesRaceCheck');
+            if (ladiesRaceCheck) {
+                ladiesRaceCheck.addEventListener('change', displayProbabilityTable);
+            }
         });
     </script>
 </body>
